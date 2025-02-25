@@ -53,7 +53,7 @@ No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 4. Vá até **Actions** → **Attach to VPC**.
 5. Associe o Internet Gateway à VPC criada.
 
-### 🔒 Criação de Security Group
+### 2️⃣ Criação de Security Group
 1. No console da AWS, vá até **EC2** > **Security Groups**.
 2. Clique em **Create Security Group** e forneça um nome.
 3. Configure as **Regras de Entrada (Inbound Rules)**:
@@ -68,3 +68,28 @@ No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 
 ---
 💡 *Pronto! Agora sua VPC e regras básicas de segurança estão configuradas. Vamos para a próxima etapa!* 🚀
+
+### 3️⃣ Provisionamento da Instância EC2
+
+#### Implantação da Instância
+1. Acesse o console da AWS e vá até **EC2 > Instances**.  
+2. Clique em **Launch Instances** para iniciar o provisionamento.  
+3. Selecione a **Amazon Linux 2023 AMI** como sistema operacional da instância.  
+4. Defina as tags necessárias e vincule a instância à **VPC configurada anteriormente**, garantindo que ela esteja em uma **sub-rede pública**.  
+
+#### Configuração de Acesso
+1. **Gere e associe uma chave SSH (.pem)** para permitir conexões remotas seguras.  
+2. Vincule a instância ao **Security Group definido previamente**, assegurando o controle adequado do tráfego de rede.  
+3. Finalize a criação da instância clicando em **Launch Instance**.  
+### 4️⃣ Conectando-se à Instância EC2 via SSH  
+
+Após o lançamento da instância, é necessário estabelecer uma conexão SSH para realizar as configurações iniciais.  
+
+#### Acesso pelo Visual Studio Code  
+1. Acesse o **console da AWS** e vá até **EC2 > Instâncias**.  
+2. Selecione a instância desejada e clique em **Connect**.  
+3. Copie o comando exibido na seção **SSH Client**.  
+4. No **Visual Studio Code**, abra o terminal e cole o comando copiado.  
+5. Substitua `"nome_da_chave"` pelo caminho correto do arquivo `.pem`, geralmente localizado em:  
+   ```bash
+   C:\Users\seu_usuario\.ssh\nome_da_chave.pem
