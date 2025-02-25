@@ -93,3 +93,96 @@ Após o lançamento da instância, é necessário estabelecer uma conexão SSH p
 5. Substitua `"nome_da_chave"` pelo caminho correto do arquivo `.pem`, geralmente localizado em:  
    ```bash
    C:\Users\seu_usuario\.ssh\nome_da_chave.pem
+
+## Etapa 2: Configuração do Servidor Web (Nginx)
+
+### 📌 1. Instalando o Nginx
+Para configurar o servidor web, primeiro instale o **Nginx** utilizando o gerenciador de pacotes do **Amazon Linux**:
+
+```bash
+sudo yum install nginx -y
+```
+
+Após a instalação, verifique se o **Nginx** foi instalado corretamente:
+
+```bash
+nginx -v
+```
+
+---
+
+### ⚙️ 2. Configurando o Nginx
+Agora, inicie o serviço **Nginx** e configure-o para iniciar automaticamente sempre que a instância EC2 for ligada:
+
+```bash
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+
+Para garantir que o **Nginx** está em execução, verifique seu status com:
+
+```bash
+sudo systemctl status nginx
+```
+
+Se tudo estiver correto, ele deve estar **ativo e rodando**. ✅
+
+---
+
+### 🖥️ 3. Criando uma Página Web Simples
+Agora, vamos criar uma página HTML básica para testar o servidor.
+
+Abra o arquivo de **index** no editor de texto:
+
+```bash
+sudo nano /usr/share/nginx/html/index.html
+```
+
+Edite o conteúdo conforme necessário, salve e saia do editor (**CTRL+X → Y → ENTER**).
+
+🔗 **Dica**: A página utilizada neste projeto pode ser encontrada neste repositório.
+
+Para testar, acesse o **IP público** da instância EC2 no navegador. Se tudo estiver certo, a página será exibida corretamente! 🎉
+
+---
+
+### 🔄 4. Configuração para Reinício Automático do Nginx
+Caso o **Nginx** falhe ou pare de funcionar, podemos garantir que ele será reiniciado automaticamente.
+
+Abra o arquivo de serviço do **Nginx**:
+
+```bash
+sudo nano /etc/systemd/system/multi-user.target.wants/nginx.service
+```
+
+Adicione as seguintes linhas dentro da seção `[Service]`:
+
+```ini
+Restart=always
+RestartSec=30
+```
+
+📌 **Explicação:**  
+- `Restart=always`: Faz com que o **Nginx** reinicie sempre que ocorrer uma falha.
+- `RestartSec=30`: Aguarda **30 segundos** antes de tentar reiniciar.
+
+Após adicionar as configurações, salve e saia do editor.
+
+Para aplicar as mudanças, recarregue o **systemd**:
+
+```bash
+sudo systemctl daemon-reload
+```
+
+Agora, teste se a reinicialização automática está funcionando simulando uma falha.
+
+1️⃣ Obtenha o **PID** (**Process ID**) do **Nginx**:
+
+```bash
+ps aux | grep nginx
+```
+
+2️⃣ O **PID** do processo mestre será o número exibido antes de `nginx: master process`.
+
+Agora seu servidor **Nginx** está pronto e mais resiliente! 🚀
+
