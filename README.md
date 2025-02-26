@@ -46,6 +46,8 @@ Este projeto faz parte do programa de bolsas da Compass UOL, com foco em **Linux
 
 No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 
+![painel da vpc](img/)
+
 ### 🌍 Criação da Internet Gateway
 1. No console da AWS, vá até **Internet Gateways**.
 2. Clique em **Create Internet Gateway** e forneça um nome.
