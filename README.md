@@ -26,7 +26,7 @@ Este projeto faz parte do programa de bolsas da Compass UOL, com foco em **Linux
 ### 🔍 Monitoramento e Automação
 - **Python** → Script de monitoramento.
 - **Requests (Python)** → Verifica a disponibilidade do site.
-- **Logging** → Logs em `/var/log/monitoramento.log`.
+- **Logging** → Logs em `/home/ec2-user/monitoramento.log`.
 - **Cron/Systemd Timers** → Agendamento a cada minuto.
 
 ### 📢 Notificações e Alertas
