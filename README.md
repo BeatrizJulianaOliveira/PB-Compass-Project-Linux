@@ -192,13 +192,13 @@ Agora, teste se a reinicialização automática está funcionando simulando uma 
 
 ![config](img/config.png)
 
-1️⃣ Obtenha o **PID** (**Process ID**) do **Nginx**:
+### 1️⃣ Obtenha o **PID** (**Process ID**) do **Nginx**:
 
 ```bash
 ps aux | grep nginx
 ```
 
-2️⃣ O **PID** do processo mestre será o número exibido antes de `nginx: master process`.
+### 2️⃣ O **PID** do processo mestre será o número exibido antes de `nginx: master process`.
 
 Agora seu servidor **Nginx** está pronto e mais resiliente! 🚀
 
@@ -221,3 +221,118 @@ sudo systemctl status nginx
 Se tudo estiver correto, o systemd detectará a falha e reiniciará o Nginx automaticamente. Durante esse processo, sua página HTML ficará temporariamente fora do ar, mas assim que a reinicialização for concluída, o site voltará a funcionar normalmente.
 
 ![reinicio](img/reinicio.png)
+
+
+## 🚀 Etapa 3: Monitoramento e Notificações  
+
+### 📌 1. Criando o Script de Monitoramento  
+
+Desenvolvemos um script em Python para verificar se o seu site está online.  
+Você pode encontrar o código completo neste repositório.  
+
+### 🛠 Como utilizar:  
+
+### 1️⃣ Abra o terminal e crie o arquivo do script na pasta `/home/ec2-user` executando:  
+
+```bash
+sudo nano /home/ec2-user/monitoramento.py
+```
+
+### 2️⃣ Copie e cole o conteúdo do script no arquivo.
+### 3️⃣ Substitua a seguinte linha pelo endereço do seu site:
+```bash
+url = "http://seu_site_aqui"
+```
+### 4️⃣ Salve o arquivo e saia do editor pressionando Ctrl + X, Y e Enter.
+
+#### ✅ Pronto! Agora o seu script de monitoramento está configurado. 🎉
+
+![monitoramento](img/monitoramento.png)
+
+### 📊 2. Verificando o Funcionamento do Script  
+
+Para garantir que o script está registrando as mensagens de disponibilidade do site corretamente, siga estes passos:  
+
+### 1️⃣ Execute o script manualmente para testar:  
+
+   ```bash
+   python3 /home/ec2-user/monitoramento.py
+   ```
+### 2️⃣ Verifique o log em tempo real para acompanhar as mensagens registradas:
+ ```bash
+   tail -f /home/ec2-user/monitoramento.log
+   ```
+O script exibirá mensagens informando se o site está disponível ou indisponível, juntamente com a data e hora da verificação.
+
+✅ Se tudo estiver funcionando corretamente, o monitoramento está ativo! 
+
+![comando tail](img/comando%20tail.png)
+
+### ⚙️ 3. Configuração do Script para Execução Automática  
+
+Para que o script seja executado automaticamente a cada minuto, utilizaremos o **cron**.  
+
+#### 📌 Instalando o Cron (caso ainda não esteja instalado)  
+
+```bash
+sudo yum install cronie -y
+```
+### ▶️ Iniciando e habilitando o serviço do cron
+Após a instalação, inicie o serviço e configure-o para iniciar automaticamente junto com o sistema:
+```bash
+sudo systemctl start crond
+sudo systemctl enable crond
+```
+### 🔎 Verificando se o serviço do cron está ativo
+Para confirmar se tudo está funcionando corretamente, execute:
+```bash
+sudo systemctl status crond
+```
+Se o serviço estiver ativo, você verá uma saída indicando que o crond está em execução.
+
+### 🕒 Agendando a execução automática do script
+Agora, edite o arquivo crontab para definir a execução do script a cada minuto:
+```bash
+crontab -e
+```
+No editor aberto, adicione a seguinte linha ao final do arquivo:
+```bash
+* * * * * /usr/bin/python3 /home/ec2-user/monitoramento.py
+```
+![crontab](img/crontab.png)
+
+Salve e feche o editor. Agora, o script será executado automaticamente a cada minuto.
+
+Para testar, verifique os logs do script em tempo real:
+```bash
+tail -f /home/ec2-user/monitoramento.log
+```
+ - A cada minuto, um novo log será registrado, informando se o site está "disponível" ou "indisponível".
+- Se quiser testar manualmente, altere o estado do Nginx entre ativo e inativo.
+- Como o script roda a cada minuto, aguarde um momento para ver a atualização nos logs.
+ - Se os logs estiverem sendo atualizados corretamente, a configuração foi concluída com sucesso!
+
+### 📢 4. Envio de Notificação no Discord em Caso de Indisponibilidade  
+Para receber alertas no Discord quando o site estiver indisponível, precisamos configurar um Webhook.
+
+#### Criando um Webhook no Discord:
+- Acesse o seu servidor no Discord.
+- Clique no nome do servidor no topo e selecione "Configurações do servidor".
+- Escolha um canal onde deseja receber as notificações e clique no ícone de configurações ⚙️ desse canal.
+- Vá até a aba "Integrações" e clique em "Webhooks".
+- Clique no botão "Criar Webhook".
+- Defina um nome para o Webhook e copie a URL gerada.
+- Agora, edite o script de monitoramento para adicionar o Webhook:
+```bash
+sudo nano /home/ec2-user/monitoramento.py
+```
+Dentro do script, encontre a variável `webhook_url` e substitua pelo seu Webhook do Discord:
+webhook_url = 
+```bash
+"https://discord.com/api/webhooks/SEU_WEBHOOK_AQUI"
+```
+Salve e feche o arquivo.
+![webhooks](img/webhooks.png)
+#### 🚨 Com a notificação configurada, aguarde a execução do script.
+Para testar, interrompa o serviço do Nginx (simulando uma falha) e veja se a notificação aparece no canal do Discord escolhido.
+![teste monitor](img/teste%20monitor.png)
