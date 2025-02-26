@@ -336,3 +336,12 @@ Salve e feche o arquivo.
 #### 🚨 Com a notificação configurada, aguarde a execução do script.
 Para testar, interrompa o serviço do Nginx (simulando uma falha) e veja se a notificação aparece no canal do Discord escolhido.
 ![teste monitor](img/teste%20monitor.png)
+
+## Conclusão
+
+Este projeto abordou a configuração de um servidor web utilizando Nginx na AWS, com o objetivo de automatizar o monitoramento da disponibilidade do site e implementar um sistema de alertas via Discord para notificar sobre falhas.
+
+Ao integrar ferramentas como Amazon EC2, Amazon VPC, Nginx, Python e o cron, foi possível estabelecer um ambiente robusto e confiável para monitoramento contínuo, garantindo uma resposta rápida em caso de problemas.
+
+Com esta abordagem, conseguimos não apenas assegurar que o servidor esteja sempre operante, mas também otimizar o processo de monitoramento e notificações, tornando-o mais eficiente e automatizado. Isso permite que as equipes responsáveis possam agir de forma proativa, minimizando o impacto de possíveis interrupções no serviço.
+
