@@ -46,7 +46,8 @@ Este projeto faz parte do programa de bolsas da Compass UOL, com foco em **Linux
 
 No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 
-![painel da vpc](img/)
+![Painel da vpc](img/painel%20da%20vpc.png)
+
 
 ### 🌍 Criação da Internet Gateway
 1. No console da AWS, vá até **Internet Gateways**.
@@ -68,6 +69,8 @@ No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
    - **All Traffic** → Permitir saída para qualquer destino (`0.0.0.0/0`).
 5. Clique em **Create Security Group** para finalizar.
 
+![Grupo de segurança](img/grupo%20de%20segurança.png)
+![Grupo de segurança](img/grupo%20de%20segurança%202.png)
 ---
 💡 *Pronto! Agora sua VPC e regras básicas de segurança estão configuradas. Vamos para a próxima etapa!* 🚀
 
@@ -78,6 +81,7 @@ No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 2. Clique em **Launch Instances** para iniciar o provisionamento.  
 3. Selecione a **Amazon Linux 2023 AMI** como sistema operacional da instância.  
 4. Defina as tags necessárias e vincule a instância à **VPC configurada anteriormente**, garantindo que ela esteja em uma **sub-rede pública**.  
+![Instancia](img/instancia.png)
 
 #### Configuração de Acesso
 1. **Gere e associe uma chave SSH (.pem)** para permitir conexões remotas seguras.  
