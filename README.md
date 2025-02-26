@@ -24,14 +24,13 @@ Este projeto faz parte do programa de bolsas da Compass UOL, com foco em **Linux
 - **Systemd** → Configura o Nginx para reiniciar automaticamente.
 
 ### 🔍 Monitoramento e Automação
-- **Bash ou Python** → Script de monitoramento.
-- **Curl (Bash) ou Requests (Python)** → Verifica a disponibilidade do site.
+- **Python** → Script de monitoramento.
+- **Requests (Python)** → Verifica a disponibilidade do site.
 - **Logging** → Logs em `/var/log/monitoramento.log`.
 - **Cron/Systemd Timers** → Agendamento a cada minuto.
 
 ### 📢 Notificações e Alertas
-- **Telegram Bot** → Envia alertas quando o servidor cai.
-- **Alternativas**: Discord Webhook ou Slack Webhook.
+- **Discord** → Envia alertas quando o servidor cai.
 
 ### 🛠️ Automação e Testes
 - **Testes Manuais** → Acessar o site via navegador.
@@ -49,14 +48,14 @@ No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 ![Painel da vpc](img/painel%20da%20vpc.png)
 
 
-### 🌍 Criação da Internet Gateway
+### Criação da Internet Gateway
 1. No console da AWS, vá até **Internet Gateways**.
 2. Clique em **Create Internet Gateway** e forneça um nome.
 3. Após a criação, selecione o Internet Gateway.
 4. Vá até **Actions** → **Attach to VPC**.
 5. Associe o Internet Gateway à VPC criada.
 
-### 2️⃣ Criação de Security Group
+###  Criação de Security Group
 1. No console da AWS, vá até **EC2** > **Security Groups**.
 2. Clique em **Create Security Group** e forneça um nome.
 3. Configure as **Regras de Entrada (Inbound Rules)**:
@@ -74,7 +73,7 @@ No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 ---
 💡 *Pronto! Agora sua VPC e regras básicas de segurança estão configuradas. Vamos para a próxima etapa!* 🚀
 
-### 3️⃣ Provisionamento da Instância EC2
+### Provisionamento da Instância EC2
 
 #### Implantação da Instância
 1. Acesse o console da AWS e vá até **EC2 > Instances**.  
@@ -88,7 +87,7 @@ No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 1. **Gere e associe uma chave SSH (.pem)** para permitir conexões remotas seguras.  
 2. Vincule a instância ao **Security Group definido previamente**, assegurando o controle adequado do tráfego de rede.  
 3. Finalize a criação da instância clicando em **Launch Instance**.  
-### 4️⃣ Conectando-se à Instância EC2 via SSH  
+### Conectando-se à Instância EC2 via SSH  
 
 Após o lançamento da instância, é necessário estabelecer uma conexão SSH para realizar as configurações iniciais.  
 
@@ -100,10 +99,10 @@ Após o lançamento da instância, é necessário estabelecer uma conexão SSH p
 5. Substitua `"nome_da_chave"` pelo caminho correto do arquivo `.pem`, geralmente localizado em:  
    ```bash
    C:\Users\seu_usuario\.ssh\nome_da_chave.pem
-
+   ```
 ## Etapa 2: Configuração do Servidor Web (Nginx)
 
-### 📌 1. Instalando o Nginx
+### 1. Instalando o Nginx
 Para configurar o servidor web, primeiro instale o **Nginx** utilizando o gerenciador de pacotes do **Amazon Linux**:
 
 ```bash
@@ -120,7 +119,7 @@ nginx -v
 
 ---
 
-### ⚙️ 2. Configurando o Nginx
+### 2. Configurando o Nginx
 Agora, inicie o serviço **Nginx** e configure-o para iniciar automaticamente sempre que a instância EC2 for ligada:
 
 ```bash
@@ -141,7 +140,7 @@ Se tudo estiver correto, ele deve estar **ativo e rodando**. ✅
 
 ---
 
-### 🖥️ 3. Criando uma Página Web Simples
+### 3. Criando uma Página Web Simples
 Agora, vamos criar uma página HTML básica para testar o servidor.
 
 Abra o arquivo de **index** no editor de texto:
@@ -160,7 +159,7 @@ Para testar, acesse o **IP público** da instância EC2 no navegador. Se tudo es
 
 ---
 
-### 🔄 4. Configuração para Reinício Automático do Nginx
+### 4. Configuração para Reinício Automático do Nginx
 Caso o **Nginx** falhe ou pare de funcionar, podemos garantir que ele será reiniciado automaticamente.
 
 Abra o arquivo de serviço do **Nginx**:
@@ -192,17 +191,17 @@ Agora, teste se a reinicialização automática está funcionando simulando uma 
 
 ![config](img/config.png)
 
-### 1️⃣ Obtenha o **PID** (**Process ID**) do **Nginx**:
+###  5. Obtenha o **PID** (**Process ID**) do **Nginx**:
 
 ```bash
 ps aux | grep nginx
 ```
 
-### 2️⃣ O **PID** do processo mestre será o número exibido antes de `nginx: master process`.
+### 6. O **PID** do processo mestre será o número exibido antes de `nginx: master process`.
 
 Agora seu servidor **Nginx** está pronto e mais resiliente! 🚀
 
-### 5. Simulação de Falha e Reinicialização Automática
+### 7. Simulação de Falha e Reinicialização Automática
 Para testar a resiliência do Nginx, vamos simular uma falha matando o processo manualmente:
 
 ```bash
@@ -232,18 +231,14 @@ Você pode encontrar o código completo neste repositório.
 
 ### 🛠 Como utilizar:  
 
-### 1️⃣ Abra o terminal e crie o arquivo do script na pasta `/home/ec2-user` executando:  
+- Abra o terminal e crie o arquivo do script na pasta `/home/ec2-user` executando:  
 
 ```bash
 sudo nano /home/ec2-user/monitoramento.py
 ```
-
-### 2️⃣ Copie e cole o conteúdo do script no arquivo.
-### 3️⃣ Substitua a seguinte linha pelo endereço do seu site:
-```bash
-url = "http://seu_site_aqui"
-```
-### 4️⃣ Salve o arquivo e saia do editor pressionando Ctrl + X, Y e Enter.
+- Copie e cole o conteúdo do script no arquivo.
+- Substitua a seguinte linha pelo endereço do seu site: url = `http://seu_site_aqui`
+- Salve o arquivo e saia do editor pressionando Ctrl + X, Y e Enter.
 
 #### ✅ Pronto! Agora o seu script de monitoramento está configurado. 🎉
 
@@ -253,12 +248,12 @@ url = "http://seu_site_aqui"
 
 Para garantir que o script está registrando as mensagens de disponibilidade do site corretamente, siga estes passos:  
 
-### 1️⃣ Execute o script manualmente para testar:  
+#### 1️⃣ Execute o script manualmente para testar:  
 
    ```bash
    python3 /home/ec2-user/monitoramento.py
    ```
-### 2️⃣ Verifique o log em tempo real para acompanhar as mensagens registradas:
+#### 2️⃣ Verifique o log em tempo real para acompanhar as mensagens registradas:
  ```bash
    tail -f /home/ec2-user/monitoramento.log
    ```
@@ -277,20 +272,20 @@ Para que o script seja executado automaticamente a cada minuto, utilizaremos o *
 ```bash
 sudo yum install cronie -y
 ```
-### ▶️ Iniciando e habilitando o serviço do cron
+#### ▶️ Iniciando e habilitando o serviço do cron
 Após a instalação, inicie o serviço e configure-o para iniciar automaticamente junto com o sistema:
 ```bash
 sudo systemctl start crond
 sudo systemctl enable crond
 ```
-### 🔎 Verificando se o serviço do cron está ativo
+#### 🔎 Verificando se o serviço do cron está ativo
 Para confirmar se tudo está funcionando corretamente, execute:
 ```bash
 sudo systemctl status crond
 ```
 Se o serviço estiver ativo, você verá uma saída indicando que o crond está em execução.
 
-### 🕒 Agendando a execução automática do script
+#### 🕒 Agendando a execução automática do script
 Agora, edite o arquivo crontab para definir a execução do script a cada minuto:
 ```bash
 crontab -e
