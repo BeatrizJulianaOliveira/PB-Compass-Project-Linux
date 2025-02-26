@@ -186,3 +186,19 @@ ps aux | grep nginx
 
 Agora seu servidor **Nginx** está pronto e mais resiliente! 🚀
 
+### 5. Simulação de Falha e Reinicialização Automática
+Para testar a resiliência do Nginx, vamos simular uma falha matando o processo manualmente:
+
+```bash
+sudo kill -9 <PID>
+```
+
+> **Nota:** Substitua `<PID>` pelo ID do processo principal do Nginx.
+
+Agora, verifique se o serviço foi reiniciado automaticamente:
+
+```bash
+sudo systemctl status nginx
+```
+
+Se tudo estiver correto, o systemd detectará a falha e reiniciará o Nginx automaticamente. Durante esse processo, sua página HTML ficará temporariamente fora do ar, mas assim que a reinicialização for concluída, o site voltará a funcionar normalmente.
