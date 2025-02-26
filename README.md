@@ -108,6 +108,8 @@ Após a instalação, verifique se o **Nginx** foi instalado corretamente:
 ```bash
 nginx -v
 ```
+![Versão do Servidor](img/versão%20do%20servidor.png)
+
 
 ---
 
@@ -118,12 +120,15 @@ Agora, inicie o serviço **Nginx** e configure-o para iniciar automaticamente se
 sudo systemctl start nginx
 sudo systemctl enable nginx
 ```
+![comando de inicio automatico](img/comando%20de%20inicio%20automatico.png)
+
 
 Para garantir que o **Nginx** está em execução, verifique seu status com:
 
 ```bash
 sudo systemctl status nginx
 ```
+![status do servidor](img/status%20servidor.png)
 
 Se tudo estiver correto, ele deve estar **ativo e rodando**. ✅
 
@@ -143,6 +148,7 @@ Edite o conteúdo conforme necessário, salve e saia do editor (**CTRL+X → Y �
 🔗 **Dica**: A página utilizada neste projeto pode ser encontrada neste repositório.
 
 Para testar, acesse o **IP público** da instância EC2 no navegador. Se tudo estiver certo, a página será exibida corretamente! 🎉
+![pagina html](img/pagina%20html.png)
 
 ---
 
