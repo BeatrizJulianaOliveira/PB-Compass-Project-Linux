@@ -81,6 +81,7 @@ No console da AWS, acesse **VPC** > **Suas VPCs** e configure conforme indicado.
 2. Clique em **Launch Instances** para iniciar o provisionamento.  
 3. Selecione a **Amazon Linux 2023 AMI** como sistema operacional da instância.  
 4. Defina as tags necessárias e vincule a instância à **VPC configurada anteriormente**, garantindo que ela esteja em uma **sub-rede pública**.  
+
 ![Instancia](img/instancia.png)
 
 #### Configuração de Acesso
@@ -154,6 +155,7 @@ Edite o conteúdo conforme necessário, salve e saia do editor (**CTRL+X → Y �
 🔗 **Dica**: A página utilizada neste projeto pode ser encontrada neste repositório.
 
 Para testar, acesse o **IP público** da instância EC2 no navegador. Se tudo estiver certo, a página será exibida corretamente! 🎉
+
 ![pagina html](img/pagina%20html.png)
 
 ---
@@ -164,19 +166,19 @@ Caso o **Nginx** falhe ou pare de funcionar, podemos garantir que ele será rein
 Abra o arquivo de serviço do **Nginx**:
 
 ```bash
-sudo nano /etc/systemd/system/multi-user.target.wants/nginx.service
+sudo nano /lib/systemd/system/nginx.service
 ```
 
 Adicione as seguintes linhas dentro da seção `[Service]`:
 
 ```ini
 Restart=always
-RestartSec=30
+RestartSec=30s
 ```
 
 📌 **Explicação:**  
 - `Restart=always`: Faz com que o **Nginx** reinicie sempre que ocorrer uma falha.
-- `RestartSec=30`: Aguarda **30 segundos** antes de tentar reiniciar.
+- `RestartSec=30s`: Aguarda **30 segundos** antes de tentar reiniciar.
 
 Após adicionar as configurações, salve e saia do editor.
 
@@ -187,6 +189,8 @@ sudo systemctl daemon-reload
 ```
 
 Agora, teste se a reinicialização automática está funcionando simulando uma falha.
+
+![config](img/config.png)
 
 1️⃣ Obtenha o **PID** (**Process ID**) do **Nginx**:
 
@@ -212,5 +216,8 @@ Agora, verifique se o serviço foi reiniciado automaticamente:
 ```bash
 sudo systemctl status nginx
 ```
+![auto restart](img/auto%20restart.png)
 
 Se tudo estiver correto, o systemd detectará a falha e reiniciará o Nginx automaticamente. Durante esse processo, sua página HTML ficará temporariamente fora do ar, mas assim que a reinicialização for concluída, o site voltará a funcionar normalmente.
+
+![reinicio](img/reinicio.png)
